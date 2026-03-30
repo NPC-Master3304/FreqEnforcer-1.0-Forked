@@ -1,0 +1,379 @@
+{
+  "app": {
+    "title": "FreqEnforcer"
+  },
+  "ui": {
+    "menu": {
+      "file": "Файл",
+      "options": "Настройки",
+      "language": "Язык",
+      "file_new_sample": "Новый сэмпл",
+      "file_refresh_sample": "Обновить сэмпл",
+      "file_quit": "Выход"
+    },
+    "language": {
+      "en": "Английский",
+      "es": "Испанский",
+      "pt_BR": "Португальский (Бразилия)",
+      "ja": "Японский",
+      "ru": "Русский"
+    },
+    "title": {
+      "debug": "Отладка",
+      "select_audio_file": "Выбрать аудиофайл"
+    },
+    "placeholder": {
+      "debug_notes": "Введите заметки/комментарии здесь. Нажмите Сохранить для записи на диск."
+    },
+    "button": {
+      "save": "Сохранить"
+    },
+    "filter": {
+      "audio_files": "Аудиофайлы (*.wav *.mp3 *.flac *.ogg);;Все файлы (*)"
+    }
+  },
+  "main": {
+    "input_file": "ВХОДНОЙ ФАЙЛ:",
+    "input_placeholder": "/путь/к/аудио/файлу.wav",
+    "button": {
+      "browse": "Обзор",
+      "show_processed": "Показать обработанное",
+      "show_original": "Показать оригинал",
+      "play": "Воспроизвести",
+      "stop": "Стоп"
+    },
+    "waveform": {
+      "original": "Оригинал",
+      "processed": "Обработано"
+    },
+    "dialog": {
+      "error": "Ошибка",
+      "loading_title": "Загрузка",
+      "loading_label": "Загрузка аудио...",
+      "rendering_waveform": "Отрисовка волновой формы...",
+      "load_failed_fmt": "Не удалось загрузить аудиофайл:\\n{error}"
+    }
+  },
+  "progress": {
+    "autotuning": "Автотюнинг...",
+    "stretching_fmt": "Растяжение... ({method}, x{factor:.2f})",
+    "lowcut_fmt": "Удаление саба (срез низких {hz:.0f} Гц)...",
+    "cleanliness_fmt": "Применение {pct:.0f}% чистоты...",
+    "highshelf_fmt": "Очистка высоких (полка {db:.1f} дБ @ {hz:.0f} Гц)...",
+    "breathiness": "Применение дыхательности...",
+    "harmonic_limiting": "Применение гармонического лимитера...",
+    "normalizing": "Нормализация...",
+    "processing": "Обработка...",
+    "preparing_audio_engine": "Подготовка аудиодвижка...",
+    "preparing_pitch_detector": "Подготовка быстрого детектора питча...",
+    "reading_file": "Чтение файла...",
+    "detecting_pitch": "Определение питча...",
+    "finalizing": "Завершение..."
+  },
+  "settings": {
+    "tabs": {
+      "settings": "Настройки",
+      "themes": "Темы"
+    },
+    "themes": {
+      "description": "Настройте цвета приложения.",
+      "open_editor": "Открыть редактор тем"
+    },
+    "group": {
+      "target_note": "Целевая нота",
+      "processing": "Обработка",
+      "cleanliness": "Чистота",
+      "detected_pitch": "Обнаруженный питч"
+    },
+    "label": {
+      "note": "Нота:",
+      "octave": "Октава:",
+      "pitch_mode": "Режим питча:",
+      "correction_amount": "Степень коррекции:",
+      "retune_speed": "Скорость коррекции:",
+      "preserve_vibrato": "Сохранить вибрато:",
+      "formant_shift": "Сдвиг формант:",
+      "stretching_method": "Метод растяжения:",
+      "stretch_factor": "Коэффициент растяжения:",
+      "manual": "Вручную:",
+      "breathiness": "Дыхательность:",
+      "hf_bias": "HF-смещение:",
+      "amount": "Количество:",
+      "low_cut": "Срез низких:",
+      "high_shelf": "High Shelf:",
+      "shelf_freq": "Shelf Freq:"
+    },
+    "target_fmt": "Цель: {note}{octave} ({freq:.2f} Гц)",
+    "checkbox": {
+      "normalize": "Нормализовать до 0дБ",
+      "preserve_formants": "Сохранить форманты",
+      "advanced_mode": "Расширенный режим"
+    },
+    "warning": {
+      "robotic": "Высокие значения = роботизированный звук"
+    },
+    "lowcut": {
+      "off": "Выкл"
+    },
+    "detected": {
+      "no_audio_loaded": "Аудио не загружено",
+      "no_pitch": "Питч не обнаружен",
+      "pitch_fmt": "{note} ({freq:.1f} Гц, {cents} цт)"
+    },
+    "button": {
+      "export_wav": "Экспорт WAV",
+      "quick_export": "Быстрый экспорт",
+      "multi_sample_export": "Мульти-сэмпл экспорт"
+    },
+    "pitch_mode": {
+      "praat_soft": {
+        "label": "PSOLA (Praat) мягкий",
+        "info": "Естественная и плавная коррекция через Praat overlap-add. Требуется praat-parselmouth."
+      },
+      "world_soft": {
+        "label": "WORLD мягкий (Коррекция)",
+        "info": "Плавная коррекция с настройками количества/скорости/вибрато (вокодер WORLD)."
+      },
+      "world_hard": {
+        "label": "WORLD жёсткий (Выравнивание)",
+        "info": "Жёсткая привязка к целевой ноте для максимально роботизированного звука (вокодер WORLD)."
+      },
+      "world_vt": {
+        "label": "WORLD VT (Vocal Tract)",
+        "info": "Вокодер WORLD с адаптивным моделированием голосового тракта. Корректирует формантную структуру в зависимости от сдвига питча для естественного звучания."
+      },
+      "world_hnm": {
+        "label": "WORLD HNM (Harmonic)",
+        "info": "Гармонический ресинтез с моделированием голосового тракта. Чистейшие гармоники, лучший для больших сдвигов питча."
+      },
+      "sine_spectral": {
+        "label": "Sinusoidal (Spectral)",
+        "info": "Отслеживание и сдвиг отдельных гармоник с сохранением спектральной огибающей. Лучший для чистых тональных источников."
+      },
+      "stft_pitchshift": {
+        "label": "STFT Spectral (Phase Vocoder)",
+        "info": "STFT фазовый вокодер с кепстральным сохранением формант. Чистый, естественный сдвиг питча."
+      },
+      "group_world": "WORLD",
+      "group_psola": "PSOLA",
+      "group_experimental": "ЭКСПЕРИМЕНТАЛЬНЫЕ"
+    },
+    "stretch_method": {
+      "audiotsm_wsola": {
+        "label": "WSOLA",
+        "info": "Чёткое качество, лучший для обычной речи. При чрезмерном использовании может звучать роботизированно."
+      },
+      "audiotsm_ola": {
+        "label": "OLA",
+        "info": "Растяжение методом перекрытия-сложения. Простой и быстрый."
+      },
+      "audiotsm_phasevocoder": {
+        "label": "Phase Vocoder",
+        "info": "Более плавный, идеален при растяжении до x2"
+      },
+      "rubberband_default_engine_faster": {
+        "label": "Rubber Band (Faster)",
+        "info": "Быстрый движок Rubber Band. Хороший баланс скорости и качества."
+      },
+      "rubberband_default_engine_finer": {
+        "label": "Rubber Band (Finer)",
+        "info": "Базовый метод растяжения."
+      },
+      "rubberband_percussive_engine_finer": {
+        "label": "Rubber Band перкуссионный",
+        "info": "Гораздо лучше справляется с транзиентами и удалением артефактов, чем стандартный Rubber Band."
+      },
+      "tdpsola": {
+        "label": "TD-PSOLA",
+        "info": "Резервный метод растяжения без audiotsm/rubberband (может быть медленнее)."
+      }
+    },
+    "stretch": {
+      "confirm": {
+        "title": "Предупреждение",
+        "text": "Превышение x2 может вызвать много артефактов и сделать сэмпл ненатуральным.",
+        "info_fmt": "Запрошено: {factor:.2f}x",
+        "yes": "ещё бы!",
+        "no": "да ну нафиг!!"
+      }
+    }
+  },
+  "theme": {
+    "title": "Редактор тем",
+    "info": "Редактируйте цвета темы в hex (#RRGGBB).",
+    "preset": "Пресет:",
+    "name": "Название:",
+    "name_placeholder": "Название темы",
+    "button": {
+      "load": "Загрузить",
+      "import": "Импорт",
+      "export": "Экспорт",
+      "save": "Сохранить",
+      "apply": "Применить",
+      "close": "Закрыть",
+      "pick": "Выбрать"
+    },
+    "pick_color_title_fmt": "Выбрать цвет {key}",
+    "color": {
+      "bg": "Фон",
+      "panel": "Панель",
+      "primary": "Основной",
+      "accent": "Акцент",
+      "highlight": "Подсветка",
+      "success": "Успех",
+      "text": "Текст"
+    }
+  },
+  "waveform": {
+    "axis": {
+      "time": "Время",
+      "midi_note": "MIDI-нота"
+    }
+  },
+  "harmonic": {
+    "title": "Гармонический лимитер",
+    "button": {
+      "reset_all": "Сбросить все"
+    },
+    "enabled": "Включено",
+    "amount": "Компрессия",
+    "axis": {
+      "db": "дБ",
+      "freq": "Частота"
+    },
+    "meta_fmt": "{note} - обнаружено гармоник: {count}"
+  },
+  "preferences": {
+    "title": "Настройки",
+    "section": {
+      "general": "Основные",
+      "display": "Отображение"
+    },
+    "tabs": {
+      "preferences": "Настройки",
+      "theme": "Тема"
+    },
+    "show_loading_dialog": {
+      "label": "Показывать диалог загрузки",
+      "desc": "Показывать оверлей при загрузке и обработке аудио"
+    },
+    "performance_mode": {
+      "label": "Режим производительности",
+      "desc": "Увеличивает задержку дебаунса и снижает детализацию осциллограммы"
+    },
+    "warmup_enabled": {
+      "label": "Прогрев аудиодвигателя при запуске",
+      "desc": "Предварительная инициализация бэкенда для ускорения первой обработки"
+    },
+    "note_notation": {
+      "label": "Нотация нот",
+      "desc": "Отображать знаки как диезы (C#) или бемоли (Db)",
+      "sharps": "Диезы",
+      "flats": "Бемоли"
+    }
+  },
+  "electron": {
+    "titlebar": {
+      "no_sample": "Сэмпл не загружен",
+      "processing": "Обработка",
+      "toggle_ab": "Переключение A/B: Оригинал / Обработано",
+      "minimize": "Свернуть",
+      "maximize": "Развернуть",
+      "restore": "Восстановить",
+      "close": "Закрыть",
+      "preferences": "Настройки..."
+    },
+    "filebar": {
+      "input_label": "Входной файл:",
+      "placeholder": "Файл не загружен — выберите или перетащите аудиофайл сюда",
+      "browse": "Обзор…",
+      "loading": "Загрузка…"
+    },
+    "waveform": {
+      "no_audio": "Аудио не загружено",
+      "processing": "Обработка…",
+      "drop_hint": "Перетащите аудиофайл или нажмите Файл → Новый сэмпл"
+    },
+    "harmonic": {
+      "empty": "Загрузите сэмпл и обработайте для просмотра гармоник",
+      "disabled": "ВЫКЛ",
+      "reset": "СБРОС",
+      "frequency_hz": "ЧАСТОТА (Гц)",
+      "level_db": "УРОВЕНЬ (дБ)"
+    },
+    "toast": {
+      "load_failed": "Не удалось загрузить аудио",
+      "processing_failed": "Ошибка обработки",
+      "export_complete": "Экспорт завершён",
+      "file_not_found": "Файл не найден",
+      "backend_not_running": "Бэкенд не запущен — запустите Python-сервер на порту 8765.",
+      "still_loading": "Всё ещё загружается… (большой файл?)",
+      "dismiss": "Закрыть",
+      "loaded": "Загружен: {{name}}",
+      "theme_applied": "Тема применена.",
+      "theme_saved": "Тема «{{name}}» сохранена.",
+      "theme_load_failed": "Не удалось загрузить тему.",
+      "theme_save_failed": "Не удалось сохранить тему.",
+      "theme_file_load_failed": "Не удалось загрузить файл темы.",
+      "theme_file_save_failed": "Не удалось сохранить файл темы."
+    },
+    "settings": {
+      "normalize": "Нормализовать до 0 дБ",
+      "vocal_tract_model": "Модель голосового тракта",
+      "harmonic_amount": "Гармоническое количество",
+      "limiter": "Лимитер",
+      "high_shelf_gain": "High Shelf усиление",
+      "high_shelf_freq": "High Shelf частота",
+      "advanced_warning": "Расширенные настройки могут ухудшить качество звука",
+      "target": "Цель:",
+      "detected": "Обнаружено:",
+      "on": "ВКЛ",
+      "off": "ВЫКЛ"
+    },
+    "theme": {
+      "simple": "Простой",
+      "advanced": "Расширенный",
+      "my_custom_theme": "Моя тема",
+      "open_themes_folder": "Открыть папку тем",
+      "folder": "Папка",
+      "hue": "Оттенок",
+      "saturation": "Насыщенность",
+      "brightness": "Яркость",
+      "group_backgrounds": "ФОНЫ",
+      "group_borders": "ГРАНИЦЫ",
+      "group_text": "ТЕКСТ",
+      "group_accent": "АКЦЕНТ",
+      "group_waveform": "ВОЛНОВАЯ ФОРМА",
+      "group_harmonic": "ГАРМОНИКИ",
+      "group_semantic": "СЕМАНТИКА",
+      "var_app_background": "Фон приложения",
+      "var_title_bar": "Заголовок окна",
+      "var_panel_surfaces": "Поверхности панелей",
+      "var_panel_hover": "Панель при наведении",
+      "var_panel_light": "Панель светлая",
+      "var_default_border": "Стандартная граница",
+      "var_emphasis_border": "Акцентная граница",
+      "var_primary_text": "Основной текст",
+      "var_secondary_text": "Второстепенный текст",
+      "var_dimmed_text": "Приглушённый текст",
+      "var_bright_text": "Яркий текст",
+      "var_accent": "Акцент",
+      "var_accent_hover": "Акцент при наведении",
+      "var_white_key_lane": "Дорожка белой клавиши",
+      "var_black_key_lane": "Дорожка чёрной клавиши",
+      "var_grid_lines": "Линии сетки",
+      "var_note_labels": "Подписи нот",
+      "var_bg_white_note": "Фон белой ноты",
+      "var_bg_black_note": "Фон чёрной ноты",
+      "var_bg_grid_line": "Фон линии сетки",
+      "var_node_gradient_start": "Начало градиента узла",
+      "var_node_gradient_end": "Конец градиента узла",
+      "var_harmonic_grid_lines": "Линии сетки",
+      "var_modified_node": "Изменённый узел",
+      "var_success_ok": "Успех / ОК",
+      "var_error_close": "Ошибка / Закрыть",
+      "var_warning": "Предупреждение",
+      "var_primary_action": "Основное действие"
+    }
+  }
+}

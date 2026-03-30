@@ -1,0 +1,379 @@
+{
+  "app": {
+    "title": "FreqEnforcer"
+  },
+  "ui": {
+    "menu": {
+      "file": "Arquivo",
+      "options": "Opções",
+      "language": "Idioma",
+      "file_new_sample": "Nova Amostra",
+      "file_refresh_sample": "Atualizar Amostra",
+      "file_quit": "Sair"
+    },
+    "language": {
+      "en": "Inglês",
+      "es": "Espanhol",
+      "pt_BR": "Português (Brasil)",
+      "ja": "Japonês",
+      "ru": "Russo"
+    },
+    "title": {
+      "debug": "Depuração",
+      "select_audio_file": "Selecionar Arquivo de Áudio"
+    },
+    "placeholder": {
+      "debug_notes": "Digite notas de feedback/aprovação aqui. Clique em Salvar para gravar no disco."
+    },
+    "button": {
+      "save": "Salvar"
+    },
+    "filter": {
+      "audio_files": "Arquivos de Áudio (*.wav *.mp3 *.flac *.ogg);;Todos os Arquivos (*)"
+    }
+  },
+  "main": {
+    "input_file": "ARQUIVO DE ENTRADA:",
+    "input_placeholder": "/caminho/para/arquivo/de/audio.wav",
+    "button": {
+      "browse": "Procurar",
+      "show_processed": "Mostrar Processado",
+      "show_original": "Mostrar Original",
+      "play": "Reproduzir",
+      "stop": "Parar"
+    },
+    "waveform": {
+      "original": "Original",
+      "processed": "Processado"
+    },
+    "dialog": {
+      "error": "Erro",
+      "loading_title": "Carregando",
+      "loading_label": "Carregando áudio...",
+      "rendering_waveform": "Renderizando forma de onda...",
+      "load_failed_fmt": "Falha ao carregar arquivo de áudio:\\n{error}"
+    }
+  },
+  "progress": {
+    "autotuning": "Afinando automaticamente...",
+    "stretching_fmt": "Esticando... ({method}, x{factor:.2f})",
+    "lowcut_fmt": "Removendo sub (corte baixo {hz:.0f} Hz)...",
+    "cleanliness_fmt": "Aplicando {pct:.0f}% de limpeza...",
+    "highshelf_fmt": "Limpando agudos (shelf {db:.1f} dB @ {hz:.0f} Hz)...",
+    "breathiness": "Aplicando soprosidade...",
+    "harmonic_limiting": "Aplicando limitador harmônico...",
+    "normalizing": "Normalizando...",
+    "processing": "Processando...",
+    "preparing_audio_engine": "Preparando motor de áudio...",
+    "preparing_pitch_detector": "Preparando detector de pitch rápido...",
+    "reading_file": "Lendo arquivo...",
+    "detecting_pitch": "Detectando pitch...",
+    "finalizing": "Finalizando..."
+  },
+  "settings": {
+    "tabs": {
+      "settings": "Configurações",
+      "themes": "Temas"
+    },
+    "themes": {
+      "description": "Personalize as cores do aplicativo.",
+      "open_editor": "Abrir Editor de Temas"
+    },
+    "group": {
+      "target_note": "Nota Alvo",
+      "processing": "Processamento",
+      "cleanliness": "Limpeza",
+      "detected_pitch": "Pitch Detectado"
+    },
+    "label": {
+      "note": "Nota:",
+      "octave": "Oitava:",
+      "pitch_mode": "Modo de Pitch:",
+      "correction_amount": "Quantidade de Correção:",
+      "retune_speed": "Velocidade de Reafinação:",
+      "preserve_vibrato": "Preservar Vibrato:",
+      "formant_shift": "Deslocamento de Formantes:",
+      "stretching_method": "Método de Esticamento:",
+      "stretch_factor": "Fator de Esticamento:",
+      "manual": "Manual:",
+      "breathiness": "Soprosidade:",
+      "hf_bias": "Viés HF:",
+      "amount": "Quantidade:",
+      "low_cut": "Corte Baixo:",
+      "high_shelf": "High Shelf:",
+      "shelf_freq": "Shelf Freq:"
+    },
+    "target_fmt": "Alvo: {note}{octave} ({freq:.2f} Hz)",
+    "checkbox": {
+      "normalize": "Normalizar para 0dB",
+      "preserve_formants": "Preservar Formantes",
+      "advanced_mode": "Modo Avançado"
+    },
+    "warning": {
+      "robotic": "Valores altos = som robótico"
+    },
+    "lowcut": {
+      "off": "Desativado"
+    },
+    "detected": {
+      "no_audio_loaded": "Nenhum áudio carregado",
+      "no_pitch": "Nenhum pitch detectado",
+      "pitch_fmt": "{note} ({freq:.1f} Hz, {cents} ct)"
+    },
+    "button": {
+      "export_wav": "Exportar WAV",
+      "quick_export": "Exportação Rápida",
+      "multi_sample_export": "Exportar Multi-Amostra"
+    },
+    "pitch_mode": {
+      "praat_soft": {
+        "label": "PSOLA (Praat) Suave",
+        "info": "Reafinação natural e suave usando Praat overlap-add. Requer praat-parselmouth."
+      },
+      "world_soft": {
+        "label": "WORLD Suave (Reafinação)",
+        "info": "Reafinação suave com controles de quantidade/velocidade/vibrato (vocoder WORLD)."
+      },
+      "world_hard": {
+        "label": "WORLD Duro (Achatar)",
+        "info": "Ajuste rígido para a nota alvo para o som mais robótico/travado (vocoder WORLD)."
+      },
+      "world_vt": {
+        "label": "WORLD VT (Trato Vocal)",
+        "info": "Vocoder WORLD com modelagem adaptativa do trato vocal. Ajusta a estrutura dos formantes com base na mudança de pitch para resultados mais naturais."
+      },
+      "world_hnm": {
+        "label": "WORLD HNM (Harmônico)",
+        "info": "Ressíntese harmônica com modelagem do trato vocal. Harmônicos mais limpos, ideal para grandes deslocamentos de pitch."
+      },
+      "sine_spectral": {
+        "label": "Sinusoidal (Espectral)",
+        "info": "Rastreia e desloca harmônicos individuais com preservação do envelope espectral. Ideal para fontes tonais limpas."
+      },
+      "stft_pitchshift": {
+        "label": "STFT Espectral (Phase Vocoder)",
+        "info": "Phase vocoder STFT com preservação cepstral de formantes. Deslocamento de pitch limpo e natural."
+      },
+      "group_world": "WORLD",
+      "group_psola": "PSOLA",
+      "group_experimental": "EXPERIMENTAL"
+    },
+    "stretch_method": {
+      "audiotsm_wsola": {
+        "label": "WSOLA",
+        "info": "Qualidade nítida e a melhor para áudio de fala geral. Pode soar robótico se exagerado."
+      },
+      "audiotsm_ola": {
+        "label": "OLA",
+        "info": "Esticamento temporal por overlap-add. Simples e rápido."
+      },
+      "audiotsm_phasevocoder": {
+        "label": "Phase Vocoder",
+        "info": "Mais suave e mais ideal para esticamento menor que x2"
+      },
+      "rubberband_default_engine_faster": {
+        "label": "Rubber Band (Rápido)",
+        "info": "Motor Rubber Band mais rápido. Bom equilíbrio entre velocidade e qualidade."
+      },
+      "rubberband_default_engine_finer": {
+        "label": "Rubber Band (Finer)",
+        "info": "Base de qualquer método de esticamento."
+      },
+      "rubberband_percussive_engine_finer": {
+        "label": "Rubber Band Percussivo",
+        "info": "Lida com transientes e remoção de artefatos muito melhor que Rubber Band Padrão."
+      },
+      "tdpsola": {
+        "label": "TD-PSOLA",
+        "info": "Esticador alternativo que funciona sem audiotsm/rubberband (pode ser mais lento)."
+      }
+    },
+    "stretch": {
+      "confirm": {
+        "title": "Aviso",
+        "text": "Ultrapassar x2 pode causar muitos artefatos e fazer sua amostra soar falsa.",
+        "info_fmt": "Solicitado: {factor:.2f}x",
+        "yes": "bora carai!",
+        "no": "nem fodendo!!"
+      }
+    }
+  },
+  "theme": {
+    "title": "Editor de Temas",
+    "info": "Edite as cores do tema como hex (#RRGGBB).",
+    "preset": "Predefinição:",
+    "name": "Nome:",
+    "name_placeholder": "Nome do tema",
+    "button": {
+      "load": "Carregar",
+      "import": "Importar",
+      "export": "Exportar",
+      "save": "Salvar",
+      "apply": "Aplicar",
+      "close": "Fechar",
+      "pick": "Escolher"
+    },
+    "pick_color_title_fmt": "Escolher cor de {key}",
+    "color": {
+      "bg": "Fundo",
+      "panel": "Painel",
+      "primary": "Primário",
+      "accent": "Destaque",
+      "highlight": "Realce",
+      "success": "Sucesso",
+      "text": "Texto"
+    }
+  },
+  "waveform": {
+    "axis": {
+      "time": "Tempo",
+      "midi_note": "Nota MIDI"
+    }
+  },
+  "harmonic": {
+    "title": "Limitador harmônico",
+    "button": {
+      "reset_all": "Redefinir tudo"
+    },
+    "enabled": "Ativado",
+    "amount": "Compressão",
+    "axis": {
+      "db": "dB",
+      "freq": "Frequência"
+    },
+    "meta_fmt": "{note} - {count} harmônicos detectados"
+  },
+  "preferences": {
+    "title": "Preferências",
+    "section": {
+      "general": "Geral",
+      "display": "Exibição"
+    },
+    "tabs": {
+      "preferences": "Preferências",
+      "theme": "Tema"
+    },
+    "show_loading_dialog": {
+      "label": "Mostrar diálogo de carregamento",
+      "desc": "Exibir uma sobreposição ao carregar e processar áudio"
+    },
+    "performance_mode": {
+      "label": "Modo de desempenho",
+      "desc": "Aumenta o atraso de debounce e reduz o detalhe da forma de onda"
+    },
+    "warmup_enabled": {
+      "label": "Aquecer motor de áudio na inicialização",
+      "desc": "Pré-inicializa o backend na inicialização para processamento mais rápido"
+    },
+    "note_notation": {
+      "label": "Notação de notas",
+      "desc": "Exibir acidentes como sustenidos (C#) ou bemóis (Db)",
+      "sharps": "Sustenidos",
+      "flats": "Bemóis"
+    }
+  },
+  "electron": {
+    "titlebar": {
+      "no_sample": "Nenhuma amostra carregada",
+      "processing": "Processando",
+      "toggle_ab": "Alternar A/B: Original / Processado",
+      "minimize": "Minimizar",
+      "maximize": "Maximizar",
+      "restore": "Restaurar",
+      "close": "Fechar",
+      "preferences": "Preferências..."
+    },
+    "filebar": {
+      "input_label": "Arquivo de Entrada:",
+      "placeholder": "Nenhum arquivo carregado — procure ou solte um arquivo de áudio aqui",
+      "browse": "Procurar…",
+      "loading": "Carregando…"
+    },
+    "waveform": {
+      "no_audio": "Nenhum áudio carregado",
+      "processing": "Processando…",
+      "drop_hint": "Solte um arquivo de áudio ou clique em Arquivo → Nova Amostra"
+    },
+    "harmonic": {
+      "empty": "Carregue uma amostra e processe para ver os harmônicos",
+      "disabled": "DESATIVADO",
+      "reset": "REDEFINIR",
+      "frequency_hz": "FREQUÊNCIA (Hz)",
+      "level_db": "NÍVEL (dB)"
+    },
+    "toast": {
+      "load_failed": "Falha ao carregar áudio",
+      "processing_failed": "Falha no processamento",
+      "export_complete": "Exportação concluída",
+      "file_not_found": "Arquivo não encontrado",
+      "backend_not_running": "Backend não está rodando — inicie o servidor Python na porta 8765.",
+      "still_loading": "Ainda carregando… (arquivo grande?)",
+      "dismiss": "Dispensar",
+      "loaded": "Carregado: {{name}}",
+      "theme_applied": "Tema aplicado.",
+      "theme_saved": "Tema \"{{name}}\" salvo.",
+      "theme_load_failed": "Falha ao carregar tema.",
+      "theme_save_failed": "Falha ao salvar tema.",
+      "theme_file_load_failed": "Falha ao carregar arquivo de tema.",
+      "theme_file_save_failed": "Falha ao salvar arquivo de tema."
+    },
+    "settings": {
+      "normalize": "Normalizar para 0 dB",
+      "vocal_tract_model": "Modelo de Trato Vocal",
+      "harmonic_amount": "Quantidade Harmônica",
+      "limiter": "Limitador",
+      "high_shelf_gain": "Ganho High Shelf",
+      "high_shelf_freq": "Freq High Shelf",
+      "advanced_warning": "Controles avançados podem degradar a qualidade do áudio",
+      "target": "Alvo:",
+      "detected": "Detectado:",
+      "on": "LIGADO",
+      "off": "DESLIGADO"
+    },
+    "theme": {
+      "simple": "Simples",
+      "advanced": "Avançado",
+      "my_custom_theme": "Meu Tema Personalizado",
+      "open_themes_folder": "Abrir pasta de temas",
+      "folder": "Pasta",
+      "hue": "Matiz",
+      "saturation": "Saturação",
+      "brightness": "Brilho",
+      "group_backgrounds": "FUNDOS",
+      "group_borders": "BORDAS",
+      "group_text": "TEXTO",
+      "group_accent": "DESTAQUE",
+      "group_waveform": "FORMA DE ONDA",
+      "group_harmonic": "HARMÔNICO",
+      "group_semantic": "SEMÂNTICO",
+      "var_app_background": "Fundo do app",
+      "var_title_bar": "Barra de título",
+      "var_panel_surfaces": "Superfícies do painel",
+      "var_panel_hover": "Painel ao passar o mouse",
+      "var_panel_light": "Painel claro",
+      "var_default_border": "Borda padrão",
+      "var_emphasis_border": "Borda de ênfase",
+      "var_primary_text": "Texto primário",
+      "var_secondary_text": "Texto secundário",
+      "var_dimmed_text": "Texto esmaecido",
+      "var_bright_text": "Texto brilhante",
+      "var_accent": "Destaque",
+      "var_accent_hover": "Destaque ao passar o mouse",
+      "var_white_key_lane": "Faixa de tecla branca",
+      "var_black_key_lane": "Faixa de tecla preta",
+      "var_grid_lines": "Linhas de grade",
+      "var_note_labels": "Rótulos de nota",
+      "var_bg_white_note": "Fundo nota branca",
+      "var_bg_black_note": "Fundo nota preta",
+      "var_bg_grid_line": "Fundo linha de grade",
+      "var_node_gradient_start": "Início do gradiente do nó",
+      "var_node_gradient_end": "Fim do gradiente do nó",
+      "var_harmonic_grid_lines": "Linhas de grade",
+      "var_modified_node": "Nó modificado",
+      "var_success_ok": "Sucesso / OK",
+      "var_error_close": "Erro / Fechar",
+      "var_warning": "Aviso",
+      "var_primary_action": "Ação primária"
+    }
+  }
+}
