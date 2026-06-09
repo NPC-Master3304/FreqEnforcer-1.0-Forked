@@ -16,5 +16,6 @@
 - Cleanliness default behavior no longer hard-bypasses high frequencies; processing now covers the full spectrum by default.
 
 ### Fixed
+- Pitch correction no longer cuts off the end of samples. Frame-based resynthesis could drop up to one analysis frame (~5 ms) from the tail; the audio is now padded before analysis and trimmed back to its exact original length so the ending is preserved.
 - Cleanliness at very low values (e.g. 1%) no longer removes all high frequencies (mask generation now preserves harmonics up to Nyquist).
 - Advanced Mode UI now hides advanced controls when not enabled.

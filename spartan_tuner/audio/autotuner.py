@@ -16,6 +16,28 @@ warnings.filterwarnings(
 )
 
 
+def _fit_to_length(y: np.ndarray, n: int) -> np.ndarray:
+    """Force ``y`` to exactly ``n`` samples (trim if longer, zero-pad if shorter)."""
+    arr = np.asarray(y)
+    cur = int(arr.shape[0])
+    if cur == n:
+        return arr
+    if cur > n:
+        return arr[:n]
+    return np.concatenate([arr, np.zeros(n - cur, dtype=arr.dtype)])
+
+
+def _pad_tail_for_synthesis(audio_arr: np.ndarray, sr: int) -> np.ndarray:
+    """Append a short tail of silence so frame-based resynthesis fully covers the input.
+
+    pyworld's synthesis length is derived from a floored analysis-frame count, so the
+    output can be up to one frame period (~5 ms) shorter than the input, cutting off
+    the end of the sample. Padding here (and trimming back afterwards) preserves the tail.
+    """
+    tail = int(sr // 100) + 1  # ~10 ms, comfortably more than one analysis frame
+    return np.concatenate([audio_arr, np.zeros(tail, dtype=audio_arr.dtype)])
+
+
 def autotune_to_note(
     audio: np.ndarray,
     sr: int,
@@ -51,6 +73,8 @@ def autotune_to_note(
 
     # pyworld requires float64
     audio_arr = audio_arr.astype(np.float64, copy=False)
+    orig_len = int(audio_arr.shape[0])
+    audio_arr = _pad_tail_for_synthesis(audio_arr, sr)
 
     # Get target frequency
     target_freq = float(note_name_to_freq(target_note))
@@ -106,7 +130,7 @@ def autotune_to_note(
     # Resynthesize audio with new f0
     output = pw.synthesize(new_f0, new_sp, ap, sr)
 
-    return output
+    return _fit_to_length(output, orig_len)
 
 
 def _moving_average(x: np.ndarray, n: int) -> np.ndarray:
@@ -147,6 +171,8 @@ def autotune_soft_to_note(
         raise ValueError("Audio is too short for pyworld processing (min 0.1s)")
 
     audio_arr = audio_arr.astype(np.float64, copy=False)
+    orig_len = int(audio_arr.shape[0])
+    audio_arr = _pad_tail_for_synthesis(audio_arr, sr)
     target_freq = float(note_name_to_freq(target_note))
 
     f0, time_axis = pw.dio(audio_arr, sr, f0_floor=50.0, f0_ceil=500.0)
@@ -197,7 +223,7 @@ def autotune_soft_to_note(
     x[valid] = np.log2(np.asarray(analysis_f0, dtype=np.float64)[valid])
 
     if not np.any(np.isfinite(x)):
-        return audio_arr
+        return _fit_to_length(audio_arr, orig_len)
 
     target_x = float(np.log2(max(1e-6, target_freq)))
 
@@ -231,7 +257,7 @@ def autotune_soft_to_note(
         new_sp = np.array([_shift_spectral_envelope(frame, formant_ratio) for frame in new_sp])
 
     output = pw.synthesize(new_f0, new_sp, ap, sr)
-    return output
+    return _fit_to_length(output, orig_len)
 
 
 def autotune_praat_soft_to_note(
@@ -268,6 +294,8 @@ def autotune_praat_soft_to_note(
     audio_arr = np.asarray(audio_arr, dtype=np.float64)
     if audio_arr.size == 0:
         return audio_arr
+
+    orig_len = int(audio_arr.shape[0])
 
     snd = parselmouth.Sound(audio_arr, sampling_frequency=float(sr))
 
@@ -362,8 +390,8 @@ def autotune_praat_soft_to_note(
     out = call(manip, "Get resynthesis (overlap-add)")
     values = np.asarray(out.values, dtype=np.float64)
     if values.ndim == 2 and values.shape[0] >= 1:
-        return values[0]
-    return np.asarray(values).reshape(-1)
+        return _fit_to_length(values[0], orig_len)
+    return _fit_to_length(np.asarray(values).reshape(-1), orig_len)
 
 
 def _shift_spectral_envelope(sp_frame: np.ndarray, ratio: float) -> np.ndarray:
@@ -449,6 +477,8 @@ def autotune_with_formant_shift(
         raise ValueError("Audio is too short for pyworld processing (min 0.1s)")
 
     audio_arr = audio_arr.astype(np.float64, copy=False)
+    orig_len = int(audio_arr.shape[0])
+    audio_arr = _pad_tail_for_synthesis(audio_arr, sr)
     target_freq = float(note_name_to_freq(target_note))
 
     # Extract components
@@ -492,4 +522,4 @@ def autotune_with_formant_shift(
     # Resynthesize
     output = pw.synthesize(new_f0, new_sp, ap, sr)
 
-    return output
+    return _fit_to_length(output, orig_len)
