@@ -231,6 +231,7 @@ class MainWindow(QMainWindow):
         self._audio_buffer = None
         self._audio_bytes = None
         self._preview_cleanup_scheduled = False
+        self._pending_sinks = []
 
         self._preview_volume = 1.0
         self._volume_ramp_timer = QTimer(self)
@@ -2308,18 +2309,43 @@ class MainWindow(QMainWindow):
             pass
         self._volume_ramp_on_done = None
 
-        if self._audio_sink is None:
+        sink = self._audio_sink
+        if sink is not None:
             try:
-                self.play_btn.setText(tr("main.button.play", "Play"))
+                sink.stop()
             except Exception:
                 pass
-            return
+
+        self._detach_current_sink()
 
         try:
-            self._audio_sink.stop()
+            self.play_btn.setText(tr("main.button.play", "Play"))
         except Exception:
             pass
 
+    def _detach_current_sink(self):
+        """Hand the active sink/buffer off for safe disposal.
+
+        The sink/buffer are captured by value into a pending-disposal list and
+        the live ``self._audio_sink`` reference is cleared immediately, so a
+        subsequent ``_start_preview_playback`` that reassigns ``self._audio_sink``
+        can no longer orphan the previous sink. Orphaned sinks are parented to the
+        window, so they would otherwise never be deleted and would keep their OS
+        audio stream open — leaking one stream per playback and degrading system
+        audio over time. Actual deletion is still deferred (see
+        ``_finalize_preview_cleanup``) so we never delete a QAudioSink from inside
+        its own ``stateChanged`` callback.
+        """
+        sink = self._audio_sink
+        buf = self._audio_buffer
+        self._audio_sink = None
+        self._audio_buffer = None
+        self._audio_bytes = None
+
+        if sink is None and buf is None:
+            return
+
+        self._pending_sinks.append((sink, buf))
         self._schedule_preview_cleanup()
 
     def _schedule_preview_cleanup(self):
@@ -2331,48 +2357,32 @@ class MainWindow(QMainWindow):
     def _finalize_preview_cleanup(self):
         self._preview_cleanup_scheduled = False
 
-        sink = self._audio_sink
-        if sink is None:
-            return
+        pending = self._pending_sinks
+        self._pending_sinks = []
 
-        try:
-            if sink.state() == QAudio.State.ActiveState:
-                self._schedule_preview_cleanup()
-                return
-        except Exception:
-            pass
+        for sink, buf in pending:
+            if sink is not None:
+                try:
+                    sink.stateChanged.disconnect(self._on_preview_state_changed)
+                except Exception:
+                    pass
+                try:
+                    sink.stop()
+                except Exception:
+                    pass
 
-        try:
-            sink.stateChanged.disconnect(self._on_preview_state_changed)
-        except Exception:
-            pass
-
-        try:
-            sink.stop()
-        except Exception:
-            pass
-
-        buf = self._audio_buffer
-        self._audio_sink = None
-        self._audio_buffer = None
-        self._audio_bytes = None
-
-        try:
             if buf is not None:
-                buf.close()
-                buf.deleteLater()
-        except Exception:
-            pass
+                try:
+                    buf.close()
+                    buf.deleteLater()
+                except Exception:
+                    pass
 
-        try:
-            sink.deleteLater()
-        except Exception:
-            pass
-
-        try:
-            self.play_btn.setText("Play")
-        except Exception:
-            pass
+            if sink is not None:
+                try:
+                    sink.deleteLater()
+                except Exception:
+                    pass
 
     def _build_preview_pcm_bytes(self, audio: np.ndarray, sr: int) -> bytes:
         audio_arr = np.asarray(audio, dtype=np.float32)
@@ -2506,7 +2516,7 @@ class MainWindow(QMainWindow):
 
         try:
             if state in (QAudio.State.IdleState, QAudio.State.StoppedState):
-                self._schedule_preview_cleanup()
+                self._detach_current_sink()
         except Exception:
             pass
 

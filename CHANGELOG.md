@@ -16,6 +16,7 @@
 - Cleanliness default behavior no longer hard-bypasses high frequencies; processing now covers the full spectrum by default.
 
 ### Fixed
+- Audio preview no longer leaks an audio output stream on every playback. Each replay reassigned the active `QAudioSink` before the previous one was disposed, orphaning a window-parented sink that kept its OS audio stream open; over time this degraded preview (and system-wide) audio, especially on Windows 11. Sinks are now disposed by value so the previous sink is always released.
 - Pitch correction no longer cuts off the end of samples. Frame-based resynthesis could drop up to one analysis frame (~5 ms) from the tail; the audio is now padded before analysis and trimmed back to its exact original length so the ending is preserved.
 - Cleanliness at very low values (e.g. 1%) no longer removes all high frequencies (mask generation now preserves harmonics up to Nyquist).
 - Advanced Mode UI now hides advanced controls when not enabled.
